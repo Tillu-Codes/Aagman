@@ -1,0 +1,1 @@
+{"name":"aagman","version":"1.0.0","description":"Ganesh Aagman Invitation Website","scripts":{"optimize":"node optimize-images.js","serve":"npx serve ."},"dependencies":{"sharp":"^0.35.4","serve":"^14.2.0"}}
