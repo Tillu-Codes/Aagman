@@ -38,109 +38,124 @@ body{
 
 #card-overlay{
   position:fixed;inset:0;z-index:1000;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  background:radial-gradient(ellipse at center,#6b1525 0%,var(--maroon-deep) 70%);
+  display:flex;align-items:center;justify-content:center;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      rgba(0,0,0,0.18) 1px,
+      transparent 2px,
+      transparent 46px,
+      rgba(0,0,0,0.14) 47px,
+      transparent 48px
+    ),
+    radial-gradient(ellipse at center,#6b1525 0%,var(--maroon-deep) 70%);
   transition:opacity 0.8s ease,transform 0.8s ease;
 }
 #card-overlay.closing{opacity:0;transform:scale(1.05);pointer-events:none}
 #card-overlay.open{opacity:0;pointer-events:none}
 
-.invitation-card{
-  position:relative;width:280px;height:380px;
-  perspective:1200px;
-}
-.card-front{
-  position:relative;width:100%;height:100%;
-  background:linear-gradient(145deg,#fdf6e8 0%,#f0e4ce 100%);
-  border-radius:12px;
-  border:3px solid var(--gold);
-  box-shadow:
-    0 0 40px rgba(212,175,55,0.3),
-    0 0 80px rgba(212,175,55,0.1),
-    inset 0 0 30px rgba(212,175,55,0.1),
-    0 20px 60px rgba(0,0,0,0.4);
-  transform-style:preserve-3d;
-  backface-visibility:hidden;
-  transition:transform 1.2s cubic-bezier(0.4,0,0.2,1);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  overflow:hidden;
-}
-#card-overlay.opened .card-front{
-  transform:perspective(800px) rotateX(180deg);
-}
-.card-front::before{
-  content:'';position:absolute;inset:6px;
-  border:1.5px solid var(--gold-dark);border-radius:8px;
+/* Ink blobs — organic wipe shapes */
+.ink-blob{
+  position:absolute;
+  width:200vmax;height:200vmax;
+  top:-100vmax;right:-100vmax;
+  border-radius:42% 58% 35% 65% / 55% 40% 60% 45%;
+  background:radial-gradient(ellipse at 60% 40%,var(--maroon-deep),#1a0508 70%);
+  transform:scale(0);
+  will-change:transform;
   pointer-events:none;
+  z-index:10;
 }
-.card-front::after{
-  content:'';position:absolute;inset:0;
-  background:repeating-linear-gradient(
-    45deg,transparent,transparent 10px,rgba(212,175,55,0.03) 10px,rgba(212,175,55,0.03) 20px
+.ink-blob-1{opacity:0.95}
+.ink-blob-2{
+  border-radius:55% 45% 60% 40% / 38% 62% 38% 62%;
+  opacity:0.9;
+}
+.ink-blob-3{
+  border-radius:48% 52% 42% 58% / 50% 45% 55% 50%;
+  opacity:0.85;
+}
+
+#card-overlay.opened .ink-blob-1{
+  animation:inkSpread 0.85s cubic-bezier(0.22,0.61,0.36,1) forwards;
+}
+#card-overlay.opened .ink-blob-2{
+  animation:inkSpread 0.85s cubic-bezier(0.22,0.61,0.36,1) 0.08s forwards;
+}
+#card-overlay.opened .ink-blob-3{
+  animation:inkSpread 0.85s cubic-bezier(0.22,0.61,0.36,1) 0.16s forwards;
+}
+
+@keyframes inkSpread{
+  0%{transform:scale(0) translate(0,0)}
+  100%{transform:scale(1.1) translate(-15%,15%)}
+}
+
+/* Curtain seam — vertical gold glow line */
+.curtain-seam{
+  position:absolute;
+  top:0;bottom:0;
+  left:50%;transform:translateX(-50%);
+  width:2px;
+  background:linear-gradient(
+    to bottom,
+    transparent 5%,
+    var(--gold-light) 30%,
+    var(--gold) 50%,
+    var(--gold-light) 70%,
+    transparent 95%
   );
+  box-shadow:0 0 12px rgba(240,200,105,0.5),0 0 30px rgba(212,175,55,0.2);
   pointer-events:none;
+  z-index:1;
 }
 
-.card-seal{
-  position:relative;width:120px;height:120px;
+/* Intro seal — centered gold circle */
+.intro-seal{
+  position:relative;z-index:2;
+  width:140px;height:140px;
   display:flex;align-items:center;justify-content:center;
 }
-.seal-ring{
-  position:absolute;width:120px;height:120px;border-radius:50%;
-  border:4px solid var(--gold);
-  box-shadow:0 0 20px rgba(212,175,55,0.4);
+.intro-seal-ring{
+  position:absolute;inset:0;border-radius:50%;
+  border:3px solid var(--gold);
+  box-shadow:0 0 20px rgba(212,175,55,0.4),0 0 50px rgba(212,175,55,0.15);
 }
-.seal-ring::before{
-  content:'';position:absolute;inset:10px;border-radius:50%;
-  border:2px solid var(--gold-dark);
-}
-.seal-inner{
-  position:relative;width:80px;height:80px;border-radius:50%;
-  background:radial-gradient(circle at 40% 40%,#f0c869,var(--gold),var(--gold-dark));
-  display:flex;align-items:center;justify-content:center;
+.intro-seal-inner{
+  width:110px;height:110px;border-radius:50%;
+  background:radial-gradient(circle at 40% 40%,var(--gold-light),var(--gold),var(--gold-dark));
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
   box-shadow:0 0 15px rgba(212,175,55,0.5),inset 0 0 10px rgba(0,0,0,0.2);
+  text-align:center;
+  gap:4px;
 }
-.seal-om{
-  font-family:var(--font-display);font-size:48px;color:var(--maroon-deep);
-  line-height:1;
+.intro-seal-sanskrit{
+  font-family:var(--font-display);
+  font-size:1.1rem;color:var(--maroon-deep);line-height:1.2;
 }
-.card-lotus{
-  width:160px;height:40px;margin-top:20px;
-  opacity:0.7;
+.intro-seal-tap{
+  font-family:var(--font-heading);
+  font-size:0.55rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--maroon-deep);opacity:0.7;
 }
-.card-lotus svg{width:100%;height:100%}
 
-.card-sweep{
-  position:absolute;top:0;left:-100%;width:60%;height:100%;
-  background:linear-gradient(90deg,transparent,rgba(240,200,105,0.35),rgba(240,200,105,0.5),rgba(240,200,105,0.35),transparent);
-  pointer-events:none;
-  opacity:0;
-  z-index:2;
+#card-overlay:not(.opened) .intro-seal{
+  animation:sealPulse 2s ease-in-out infinite;
 }
-#card-overlay.opened .card-sweep{
-  animation:sweepLight 0.7s ease-out 0.3s forwards;
+@keyframes sealPulse{
+  0%,100%{opacity:0.8;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.04)}
 }
-@keyframes sweepLight{
-  0%{left:-80%;opacity:0}
-  15%{left:0%;opacity:1}
-  75%{left:100%;opacity:0.6}
-  100%{left:100%;opacity:0}
-}
-.card-ornament.top{top:20px;left:50%;transform:translateX(-50%)}
-.card-ornament.bottom{bottom:20px;left:50%;transform:translateX(-50%)}
 
-.tap-prompt{
-  margin-top:40px;text-align:center;
-  font-family:var(--font-display);color:var(--gold-light);
-  font-size:1.1rem;letter-spacing:2px;
-  animation:tapPulse 2s ease-in-out infinite;
+/* Dissolve seal + seam during ink wipe */
+#card-overlay.opened .intro-seal,
+#card-overlay.opened .curtain-seam{
+  animation:sealDissolve 0.7s ease-out 0.1s forwards;
 }
-.prompt-text{display:block;font-size:1.3rem}
-.prompt-english{display:block;font-size:0.75rem;opacity:0.7;margin-top:4px;letter-spacing:3px}
-
-@keyframes tapPulse{
-  0%,100%{opacity:0.6;transform:scale(1)}
-  50%{opacity:1;transform:scale(1.05)}
+@keyframes sealDissolve{
+  0%{opacity:1}
+  100%{opacity:0}
 }
 
 .hero{
@@ -345,6 +360,39 @@ body{
 .img-reveal{opacity:0;transition:opacity 0.8s ease;will-change:opacity}
 .img-reveal.loaded{opacity:1}
 
+/* Staggered hero reveal */
+.hero-image-wrap,
+.hero-sanskrit,
+.hero-heading,
+.hero-mandal,
+.hero-tagline{
+  opacity:0;
+  will-change:transform,opacity;
+}
+.page-visible.revealing .hero-image-wrap{
+  animation:heroImageReveal 0.7s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+.page-visible.revealing .hero-sanskrit{
+  animation:heroTextReveal 0.6s cubic-bezier(0.4,0,0.2,1) 0.25s forwards;
+}
+.page-visible.revealing .hero-heading{
+  animation:heroTextReveal 0.6s cubic-bezier(0.4,0,0.2,1) 0.4s forwards;
+}
+.page-visible.revealing .hero-mandal{
+  animation:heroTextReveal 0.6s cubic-bezier(0.4,0,0.2,1) 0.55s forwards;
+}
+.page-visible.revealing .hero-tagline{
+  animation:heroTextReveal 0.6s cubic-bezier(0.4,0,0.2,1) 0.7s forwards;
+}
+@keyframes heroImageReveal{
+  0%{opacity:0;transform:scale(1.06)}
+  100%{opacity:1;transform:scale(1)}
+}
+@keyframes heroTextReveal{
+  0%{opacity:0;transform:translateY(16px)}
+  100%{opacity:1;transform:translateY(0)}
+}
+
 /* Reduced motion */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{
@@ -356,16 +404,19 @@ body{
   .img-reveal{opacity:1}
   .page-hidden{opacity:1}
   #card-overlay{transition:none}
-  .card-front{transition:none}
+  .ink-blob{display:none}
+  .curtain-seam{display:none}
+  .intro-seal{display:none}
+  .hero-image-wrap,.hero-sanskrit,.hero-heading,.hero-mandal,.hero-tagline{
+    opacity:1!important;transform:none!important;animation:none!important;
+  }
 }
 
 /* Tablet */
 @media(min-width:600px){
-  .invitation-card{width:320px;height:420px}
-  .card-seal{width:140px;height:140px}
-  .seal-ring{width:140px;height:140px}
-  .seal-inner{width:95px;height:95px}
-  .seal-om{font-size:56px}
+  .intro-seal{width:160px;height:160px}
+  .intro-seal-inner{width:130px;height:130px}
+  .intro-seal-sanskrit{font-size:1.3rem}
   .hero-sanskrit{font-size:2.2rem}
   .hero-heading{font-size:2.2rem}
   .section-heading{font-size:2rem}
@@ -375,11 +426,10 @@ body{
 
 /* Desktop */
 @media(min-width:900px){
-  .invitation-card{width:380px;height:500px}
-  .card-seal{width:160px;height:160px}
-  .seal-ring{width:160px;height:160px}
-  .seal-inner{width:110px;height:110px}
-  .seal-om{font-size:64px}
+  .intro-seal{width:180px;height:180px}
+  .intro-seal-inner{width:150px;height:150px}
+  .intro-seal-sanskrit{font-size:1.5rem}
+  .intro-seal-tap{font-size:0.65rem}
   .hero-heading{font-size:2.6rem}
   .hero-sanskrit{font-size:2.6rem}
   .section-heading{font-size:2.2rem;margin-bottom:40px}
@@ -398,5 +448,4 @@ body{
 @media(max-height:500px) and (orientation:landscape){
   .hero{min-height:auto;padding:16px}
   .hero-image-wrap{aspect-ratio:16/9;max-height:50vh}
-  .tap-prompt{margin-top:16px}
 }

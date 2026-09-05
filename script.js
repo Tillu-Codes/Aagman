@@ -132,24 +132,18 @@
 
     cardOverlay.classList.add('opened');
 
-    if(!prefersReducedMotion.matches){
-      var cardFront = cardOverlay.querySelector('.card-front');
-      if(cardFront) cardFront.style.willChange = 'transform';
-    }
-
     setTimeout(function(){
       if(!isMuted) playChime();
     }, 200);
 
-    var revealDelay = prefersReducedMotion.matches ? 50 : 1400;
+    var revealDelay = prefersReducedMotion.matches ? 50 : 1000;
     setTimeout(function(){
       cardOverlay.classList.add('closing');
       mainContent.classList.remove('page-hidden');
       mainContent.classList.add('page-visible');
+      mainContent.classList.add('revealing');
       setTimeout(function(){
         cardOverlay.classList.add('open');
-        var cf = cardOverlay.querySelector('.card-front');
-        if(cf) cf.style.willChange = 'auto';
       }, 50);
       setupReveals();
     }, revealDelay);
