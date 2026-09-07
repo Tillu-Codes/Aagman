@@ -130,14 +130,8 @@ body{
   text-align:center;
   gap:4px;
 }
-.intro-seal-sanskrit{
-  font-family:var(--font-display);
-  font-size:1.1rem;color:var(--maroon-deep);line-height:1.2;
-}
-.intro-seal-tap{
-  font-family:var(--font-heading);
-  font-size:0.55rem;letter-spacing:3px;text-transform:uppercase;
-  color:var(--maroon-deep);opacity:0.7;
+.seal-logo{
+  width:100%;height:100%;border-radius:50%;object-fit:cover;
 }
 
 #card-overlay:not(.opened) .intro-seal{
@@ -247,6 +241,11 @@ body{
 .detail-content{display:flex;flex-direction:column}
 .detail-label{font-size:0.75rem;text-transform:uppercase;letter-spacing:2px;color:var(--gold-dark);font-weight:600}
 .detail-value{font-family:var(--font-heading);font-size:1.15rem;color:var(--cream);margin-top:2px}
+.detail-link{
+  font-family:var(--font-heading);font-size:1.15rem;color:var(--gold);margin-top:2px;
+  text-decoration:none;border-bottom:1px solid var(--gold);transition:color 0.2s ease,border-color 0.2s ease;
+}
+.detail-link:hover,.detail-link:focus{color:var(--gold-light);border-color:var(--gold-light)}
 
 .gallery{padding:20px 24px 60px}
 .gallery-grid{
@@ -256,6 +255,7 @@ body{
 .gallery-item{position:relative;overflow:hidden;border-radius:12px}
 .gallery-image{
   width:100%;display:block;border-radius:12px;
+  aspect-ratio:9/16;object-fit:cover;max-width:420px;margin:0 auto;
   transition:transform 0.5s ease,box-shadow 0.5s ease;
 }
 .gallery-frame{
@@ -273,6 +273,7 @@ body{
 }
 .mandal-image{
   width:100%;display:block;border-radius:12px;
+  aspect-ratio:16/9;object-fit:cover;
   box-shadow:0 10px 40px rgba(0,0,0,0.3);
 }
 .mandal-frame{
@@ -416,11 +417,9 @@ body{
 @media(min-width:600px){
   .intro-seal{width:160px;height:160px}
   .intro-seal-inner{width:130px;height:130px}
-  .intro-seal-sanskrit{font-size:1.3rem}
   .hero-sanskrit{font-size:2.2rem}
   .hero-heading{font-size:2.2rem}
   .section-heading{font-size:2rem}
-  .gallery-grid{grid-template-columns:1fr 1fr}
   .detail-row{padding:24px 32px}
 }
 
@@ -428,13 +427,9 @@ body{
 @media(min-width:900px){
   .intro-seal{width:180px;height:180px}
   .intro-seal-inner{width:150px;height:150px}
-  .intro-seal-sanskrit{font-size:1.5rem}
-  .intro-seal-tap{font-size:0.65rem}
   .hero-heading{font-size:2.6rem}
   .hero-sanskrit{font-size:2.6rem}
   .section-heading{font-size:2.2rem;margin-bottom:40px}
-  .gallery-grid{grid-template-columns:1fr 1fr 1fr}
-  .gallery-grid{gap:32px}
   .about-text{font-size:1.2rem}
 }
 
