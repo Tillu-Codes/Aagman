@@ -252,10 +252,10 @@ body{
   display:grid;grid-template-columns:1fr;gap:24px;
   max-width:700px;margin:0 auto;
 }
-.gallery-item{position:relative;overflow:hidden;border-radius:12px}
+.gallery-item{position:relative;border-radius:12px}
 .gallery-image{
   width:100%;display:block;border-radius:12px;
-  aspect-ratio:9/16;object-fit:cover;max-width:420px;margin:0 auto;
+  object-fit:contain;max-width:420px;margin:0 auto;
   transition:transform 0.5s ease,box-shadow 0.5s ease;
 }
 .gallery-frame{
@@ -269,11 +269,11 @@ body{
 .mandal{padding:20px 24px 60px}
 .mandal-photo-wrap{
   max-width:500px;margin:0 auto;position:relative;
-  overflow:hidden;border-radius:12px;
+  border-radius:12px;
 }
 .mandal-image{
   width:100%;display:block;border-radius:12px;
-  aspect-ratio:16/9;object-fit:cover;
+  object-fit:contain;
   box-shadow:0 10px 40px rgba(0,0,0,0.3);
 }
 .mandal-frame{
