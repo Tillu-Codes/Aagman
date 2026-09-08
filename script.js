@@ -14,6 +14,7 @@
   var audioCtx = null;
   var muteBtn = document.getElementById('mute-btn');
   var muteIcon = muteBtn ? muteBtn.querySelector('.mute-icon') : null;
+  var bgMusic = document.getElementById('bg-music');
 
   function resizeCanvas(){
     if(!particleCanvas) return;
@@ -136,6 +137,11 @@
       if(!isMuted) playChime();
     }, 200);
 
+    if(bgMusic && !isMuted){
+      bgMusic.volume = 0.45;
+      bgMusic.play().catch(function(){});
+    }
+
     var revealDelay = prefersReducedMotion.matches ? 50 : 1000;
     setTimeout(function(){
       cardOverlay.classList.add('closing');
@@ -183,6 +189,14 @@
       e.stopPropagation();
       isMuted = !isMuted;
       muteIcon.textContent = isMuted ? '🔇' : '🔊';
+      if(bgMusic){
+        if(isMuted){
+          bgMusic.pause();
+        } else {
+          bgMusic.volume = 0.45;
+          bgMusic.play().catch(function(){});
+        }
+      }
     });
   }
 
